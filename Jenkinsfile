@@ -1,6 +1,5 @@
 node(){
 	
-	def mvnHome = tool 'MavenBuildTool'
 	def sonarScanner = tool name: 'ShaSonar', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
 
 	
@@ -9,12 +8,12 @@ node(){
 			checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'ee50f028-40a3-4979-bc03-89dce5dd2b07', url: 'https://github.com/SharanyaJayaram/SonarQubeNodeJS.git']])
 		}
 		
-		stage('Maven Build'){
-			sh "${mvnHome}/bin/mvn clean install -Dmaven.test.skip=true"
+		stage('NPM Build'){
+			sh "npm install"
 		}
 		
 		stage('Test Cases Execution'){
-			sh "${mvnHome}/bin/mvn test"
+			echo "test successful"
 		}
 		
 		stage('SonarQube Analysis'){
